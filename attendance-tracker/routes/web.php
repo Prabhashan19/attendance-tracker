@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/hello', function () {
     return ('Hello!, Welcome to the Attendance Tracker System.');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
