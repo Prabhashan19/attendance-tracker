@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +18,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
-Route::get('/hello', function () {
-    return ('Hello!, Welcome to the Attendance Tracker System.');
-});
+// Route::get('/hello', function () {
+//     return ('Hello!, Welcome to the Attendance Tracker System.');
+// });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('attendances', AttendanceController::class)->only(['create', 'store']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
