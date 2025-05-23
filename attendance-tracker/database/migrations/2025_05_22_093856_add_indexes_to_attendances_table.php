@@ -16,10 +16,10 @@ class AddIndexesToAttendancesTable extends Migration
         Schema::table('attendances', function (Blueprint $table) {
             // Composite index for subject-date queries
             $table->index(['subject_id', 'date']);
-            
+
             // Composite index for student-subject queries
             $table->index(['student_id', 'subject_id']);
-            
+
             // Single index for date-only queries
             $table->index(['date']);
         });
